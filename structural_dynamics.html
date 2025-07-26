@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結構動力學公式彙整</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.8;
+            display: flex;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        #sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            text-align: center;
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+        }
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #sidebar ul li a {
+            display: block;
+            color: #ecf0f1;
+            padding: 12px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        #sidebar ul li a:hover, #sidebar ul li a.active {
+            background-color: #1abc9c;
+            color: #2c3e50;
+        }
+        #content {
+            margin-left: 270px;
+            padding: 20px 40px;
+            width: calc(100% - 270px);
+        }
+        .chapter {
+            margin-bottom: 40px;
+            padding-top: 20px;
+            border-top: 3px solid #3498db;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        h3 {
+            color: #2980b9;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        .formula {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fdfdfd;
+            border-left: 5px solid #1abc9c;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+        .formula-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>公式導覽</h2>
+    <ul>
+        <li><a href="#ch1" class="nav-link">第一章、單自由度系統</a></li>
+        <li><a href="#ch2" class="nav-link">第二章、廣義與自由度系統</a></li>
+        <li><a href="#ch3" class="nav-link">第三章、反應譜與設計譜</a></li>
+        <li><a href="#ch4" class="nav-link">第四章、多自由度離散系統</a></li>
+        <li><a href="#ch5" class="nav-link">第五章、連續質量系統</a></li>
+        <li><a href="#appendix-a" class="nav-link">附錄 A - 補充公式</a></li>
+    </ul>
+</div>
+
+<div id="content">
+    <div id="ch1" class="chapter">
+        <h3>第一章、單自由度系統 (Single-Degree-of-Freedom Systems)</h3>
+        
+        <div class="formula-title">基本參數</div>
+        <div class="formula">自然振動(角)頻率: $$\omega_n = \sqrt{\frac{k}{m}} \quad (\text{rad/sec})$$</div>
+        <div class="formula">自然週期: $$T_n = \frac{2\pi}{\omega_n} \quad (\text{sec})$$</div>
+        <div class="formula">頻率: $$f = \frac{1}{T_n} \quad (\text{Hz})$$</div>
+        <div class="formula">臨界阻尼係數: $$c_{cr} = 2\sqrt{km} = 2m\omega_n$$</div>
+        <div class="formula">阻尼比: $$\xi = \frac{c}{c_{cr}}$$</div>
+        <div class="formula">有阻尼振動頻率: $$\omega_d = \omega_n \sqrt{1-\xi^2}$$</div>
+        <div class="formula">頻率比: $$\beta = \frac{\bar{\omega}}{\omega_n} \quad (\bar{\omega} \text{ 為外力頻率})$$</div>
+        <div class="formula">有阻尼時，共振條件: $$\beta = \sqrt{1-2\xi^2} \text{, 並非 } \beta=1$$</div>
+
+        <div class="formula-title">運動方程式與位移反應</div>
+        <div class="formula">運動方程式 (簡諧荷載): $$m\ddot{u} + c\dot{u} + ku = p_0 \sin(\bar{\omega}t)$$</div>
+        <div class="formula">位移反應解: $$u = u_h + u_p = e^{-\xi\omega_n t}(A\cos\omega_d t + B\sin\omega_d t) + \frac{p_0/k}{(1-\beta^2)^2+(2\xi\beta)^2}\sin(\bar{\omega}t - \theta)$$</div>
+        <div class="formula">相位角: $$\tan\theta = \frac{2\xi\beta}{1-\beta^2}$$</div>
+        <div class="formula">運動方程式 (定力): $$m\ddot{u} + c\dot{u} + ku = p_0$$</div>
+        <div class="formula">位移反應解 (定力): $$u = e^{-\xi\omega_n t}(A\cos\omega_d t + B\sin\omega_d t) + \frac{P_0}{k}$$</div>
+
+        <div class="formula-title">反應相關參數</div>
+        <div class="formula">動力放大因子 (Displacement Amplification Factor): $$D_s = \frac{1}{\sqrt{(1-\beta^2)^2 + (2\xi\beta)^2}}$$</div>
+        <div class="formula">對數遞減量: $$\delta = \ln\frac{u_i}{u_{i+1}} = \frac{2\pi\xi}{\sqrt{1-\xi^2}}$$</div>
+        <div class="formula">由對數遞減量反求阻尼比: $$\xi = \frac{\delta}{\sqrt{(2\pi)^2 + \delta^2}}$$</div>
+        <div class="formula">半功率法: $$2\xi = \beta_b - \beta_a = \frac{\omega_b - \omega_a}{\omega_n}$$</div>
+    </div>
+
+    <div id="ch2" class="chapter">
+        <h3>第二章、廣義與自由度系統 (Generalized SDOF Systems)</h3>
+        <div class="formula">變位反應解: $$u(x,t) = \phi(x) z(t) \quad (\phi(x) \text{ 為形狀函數, } z(t) \text{ 為廣義座標})$$</div>
+        <div class="formula">廣義質量: $$m^* = \int_0^L m(x)[\phi(x)]^2 dx + \sum_{i=1}^n m_i[\phi(x_i)]^2 + \sum_{j=1}^n J_{Gi}[\phi'(x_j)]^2$$</div>
+        <div class="formula">廣義阻尼: $$c^* = \int_0^L c(x)[\phi(x)]^2 dx + \sum_{i=1}^n c_i[\phi(x_i)]^2$$</div>
+        <div class="formula">廣義勁度: $$k^* = \int_0^L EI(x)[\phi''(x)]^2 dx + \sum_{i=1}^n k_i[\phi(x_i)]^2 + \int_0^L EA(x)[\phi'(x)]^2 dx$$</div>
+        <div class="formula">廣義外力: $$p^*(t) = \int_0^L p(x,t)[\phi(x)] dx + \sum_{i=1}^n p_i(t)[\phi(x_i)]$$</div>
+        <div class="formula">自然振動(角)頻率: $$\omega_n = \sqrt{\frac{k^*}{m^*}}$$</div>
+        <div class="formula">地震擾動因數: $$L = \int_0^L m(x)[\phi(x)] dx$$</div>
+        <div class="formula">參與係數: $$\Gamma = \frac{L}{m^*}$$</div>
+    </div>
+
+    <div id="ch3" class="chapter">
+        <h3>第三章、反應譜與設計譜 (Response Spectrum & Design)</h3>
+        <div class="formula">按杜哈密積分，應對時變位移: $$u_p(t) = \frac{1}{m\omega_d} \int_0^t p(\tau)e^{-\xi\omega_n(t-\tau)}\sin[\omega_d(t-\tau)] d\tau$$</div>
+        <div class="formula">最大相對位移: $$S_d = u_p(t)_{\max}$$</div>
+        <div class="formula">擬相對速度: $$PS_v = \omega_n S_d$$</div>
+        <div class="formula">擬絕對加速度: $$PS_a = \omega_n PS_v = \omega_n^2 S_d$$</div>
+        <div class="formula">最大等值彈性力: $$f_{\max} = kS_d = m\omega_n^2 S_d = mPS_a$$</div>
+        <div class="formula">最大位移: $$z_{\max} = \Gamma S_d = \Gamma PS_a / \omega_n^2$$</div>
+    </div>
+    
+    <div id="ch4" class="chapter">
+        <h3>第四章、多自由度離散系統 (Multi-Degree-of-Freedom Systems)</h3>
+        <div class="formula-title">振態疊加法</div>
+        <div class="formula">位移反應解: $$\{u(t)\} = [\Phi]\{Y(t)\}$$</div>
+        <div class="formula">振態座標下，第 i 振態運動方程式: $$\ddot{Y}_i + 2\xi_i\omega_i\dot{Y}_i + \omega_i^2 Y_i = \frac{P_i(t)}{M_i}$$</div>
+        <div class="formula">第 i 振態地震擾動因數: $$\{L_i\} = [\Phi]^T[m]\{1\}$$</div>
+        <div class="formula">第 i 振態參與係數: $$\Gamma_i = \frac{L_i}{M_i}$$</div>
+        <div class="formula">第 i 振態有效質量: $$m_i^* = L_i \Gamma_i = \frac{L_i^2}{M_i} = \Gamma_i^2 M_i$$</div>
+        <div class="formula">第 i 振態有效質量比: $$\frac{m_i^*}{\sum m}$$</div>
+        <div class="formula">振態正交性: $$\{\phi_i\}^T[k]\{\phi_j\}=0 \text{, and } \{\phi_i\}^T[m]\{\phi_j\}=0 \quad \text{for } i \neq j$$</div>
+
+        <div class="formula-title">振態疊加步驟</div>
+        <div class="formula">(1) 建立多自由度振動之運動方程式</div>
+        <div class="formula">(2) 進行振態分析，令 $$|[k] - \omega^2 [m]| = 0$$ 解出各振態頻率 ωi、訂振態向量 {φi} 以及組成振態矩陣 [Φ]</div>
+        <div class="formula">(3) 計算振態質量矩陣 $$[M] = [\Phi]^T[m][\Phi]$$</div>
+        <div class="formula">(4) 計算振態阻尼矩陣 $$[C] = [\Phi]^T[c][\Phi]$$</div>
+        <div class="formula">(5) 振態外力向量 $$\{P(t)\} = [\Phi]^T\{p(t)\}$$</div>
+        <div class="formula">(6) 列不相聯屬運動方程式 $$M_i\ddot{Y}_i + C_i\dot{Y}_i + K_i Y_i = P_i$$</div>
+        <div class="formula">(7) 起始條件轉換 $$\{Y\} = [\Phi]^{-1}\{u\}, \{\dot{Y}\} = [\Phi]^{-1}\{\dot{u}\}$$</div>
+        <div class="formula">(8) 解出振態座標內反應 Yi</div>
+        <div class="formula">(9) 原幾何座標內反應 $$\{u\} = [\Phi]\{Y\}$$</div>
+        
+        <div class="formula-title">反應譜分析</div>
+        <div class="formula">最大側力 (二自由度為例): $$ \{f_{s,max}\} = 
+            \begin{Bmatrix} m_1\omega_1^2 \phi_{11} Y_{1,max} & m_1\omega_2^2 \phi_{12} Y_{2,max} \\ m_2\omega_1^2 \phi_{21} Y_{1,max} & m_2\omega_2^2 \phi_{22} Y_{2,max} \end{Bmatrix}
+        $$</div>
+        <div class="formula">最大位移 (二自由度為例): $$ \{u_{max}\} = 
+            \begin{Bmatrix} \phi_{11} Y_{1,max} & \phi_{12} Y_{2,max} \\ \phi_{21} Y_{1,max} & \phi_{22} Y_{2,max} \end{Bmatrix}
+        $$</div>
+        <div class="formula">最大等值側力 (二自由度為例): $$ \{f_{s,max}\} = \frac{PGA}{g}
+            \begin{Bmatrix} m_1\omega_1^2 \phi_{11} \Gamma_1 S_{d1} & m_1\omega_2^2 \phi_{12} \Gamma_2 S_{d2} \\ m_2\omega_1^2 \phi_{21} \Gamma_1 S_{d1} & m_2\omega_2^2 \phi_{22} \Gamma_2 S_{d2} \end{Bmatrix}
+        $$</div>
+        
+        <div class="formula-title">SRSS (Square Root of Sum of Squares) 法</div>
+        <div class="formula">計算各質量點最大位移: $$u_{1,max} = \sqrt{(\phi_{11}Y_{1,max})^2 + (\phi_{12}Y_{2,max})^2}$$</div>
+        <div class="formula">計算基底剪力: $$V_{base} = \sqrt{(\text{第一振態最大基底剪力})^2 + (\text{第二振態最大基底剪力})^2}$$</div>
+        <div class="formula">計算基底彎矩: $$M_{base} = \sqrt{(\text{第一振態最大基底彎矩})^2 + (\text{第二振態最大基底彎矩})^2}$$</div>
+
+    </div>
+
+    <div id="ch5" class="chapter">
+        <h3>第五章、連續質量系統 (Continuous Mass Systems)</h3>
+        <div class="formula">工程樑橫向振動控制方程式: $$\frac{\partial^2}{\partial x^2}\left[EI(x)\frac{\partial^2 u(x,t)}{\partial x^2}\right] + m(x)\frac{\partial^2 u(x,t)}{\partial t^2} = p(x,t)$$</div>
+        <div class="formula">軸向桿件軸向振動控制方程式: $$\frac{\partial}{\partial x}\left[EA(x)\frac{\partial u(x,t)}{\partial x}\right] + m(x)\frac{\partial^2 u(x,t)}{\partial t^2} + p(x,t) = 0$$</div>
+        <div class="formula">工程樑振動變位反應解: $$u(x,t) = \phi(x) z(t)$$</div>
+        <div class="formula">其中: $$\phi(x) = C_1\cosh(\beta x) + C_2\sinh(\beta x) + C_3\cos(\beta x) + C_4\sin(\beta x)$$</div>
+        <div class="formula">且: $$\beta^4 = \frac{m\bar{\omega}^2}{EI}$$</div>
+    </div>
+
+    <div id="appendix-a" class="chapter">
+        <h3>附錄 A - 補充公式</h3>
+        <div class="formula">雙曲正弦函數 (sinh): $$\sinh(\beta x) = \frac{e^{\beta x} - e^{-\beta x}}{2}, \quad \frac{d}{dx}\sinh(\beta x) = \beta\cosh(\beta x)$$</div>
+        <div class="formula">雙曲餘弦函數 (cosh): $$\cosh(\beta x) = \frac{e^{\beta x} + e^{-\beta x}}{2}, \quad \frac{d}{dx}\cosh(\beta x) = \beta\sinh(\beta x)$$</div>
+        <div class="formula">斷面軸力: $$N(x,t) = AE\epsilon(x) = AE\frac{\partial u(x,t)}{\partial x}$$</div>
+        <div class="formula">力傳遞率 (TRp): $$\text{TR}_p = \frac{\text{基礎受力振幅}}{\text{外力振幅}} = D_s\sqrt{1+(2\xi\beta)^2}$$</div>
+        <div class="formula">位移傳遞率 (TRd): $$\text{TR}_d = \frac{\text{上部結構絕對位移振幅}}{\text{基礎位移振幅}} = \frac{u_{total,max}}{u_{g0}} = D_s\sqrt{1+(2\xi\beta)^2}$$</div>
+        <div class="formula">雷利阻尼 (Rayleigh Damping): $$[C] = a_0[M] + a_1[K]$$</div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const chapters = document.querySelectorAll('.chapter');
+
+        function setActiveLink(id) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Set active link on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveLink(entry.target.id);
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+
+        chapters.forEach(chapter => {
+            observer.observe(chapter);
+        });
+
+        // Set active link on click
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                 // Manually set active class on click for instant feedback
+                setActiveLink(targetId.substring(1));
+            });
+        });
+        
+        // Set initial active link
+        if(window.location.hash) {
+             setActiveLink(window.location.hash.substring(1));
+        } else {
+             setActiveLink('ch1');
+        }
+    });
+</script>
+
+</body>
+</html>
