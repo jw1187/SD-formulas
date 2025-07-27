@@ -3,97 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結構動力學公式彙整</title>
+    <title>水豚君的結構動力學筆記</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #FDF8F0; /* 溫暖的米色背景 */
+            --header-bg: #A67B5B; /* 水豚棕色 */
+            --text-color: #4E342E; /* 深棕色文字 */
+            --accent-color: #FFB74D; /* 柚子橘色 */
+            --card-bg: #FFFFFF;
+            --border-color: #D7CCC8;
+            --formula-bg: #F5EFE6; /* 淺褐色公式背景 */
+        }
+
         body {
-            font-family: 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+            font-family: 'Nunito', 'Noto Sans TC', sans-serif;
             line-height: 1.8;
-            display: flex;
             margin: 0;
-            background-color: #f9f9f9;
+            padding-top: 70px; /* 為固定 header 留出空間 */
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
-        #sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            height: 100vh;
+
+        /* 頂部導覽列 */
+        #header {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 0 20px;
+            height: 70px;
             position: fixed;
-            overflow-y: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 1000;
         }
-        #sidebar h2 {
-            text-align: center;
-            color: #1abc9c;
-            border-bottom: 2px solid #1abc9c;
-            padding-bottom: 10px;
+
+        #header h1 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        #sidebar ul {
-            list-style-type: none;
-            padding: 0;
+        
+        /* 水豚 SVG 圖標 */
+        .capybara-icon {
+            width: 40px;
+            height: 40px;
         }
-        #sidebar ul li a {
+
+        /* 下拉選單按鈕 */
+        #menu-toggle {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: inherit;
+            transition: background-color 0.3s;
+        }
+        #menu-toggle:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* 下拉選單容器 */
+        #dropdown-menu {
+            display: none; /* 預設隱藏 */
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 250px;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+            transform-origin: top right;
+        }
+
+        #dropdown-menu.show {
             display: block;
-            color: #ecf0f1;
-            padding: 12px 15px;
+        }
+
+        #dropdown-menu ul {
+            list-style-type: none;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        #dropdown-menu ul li a {
+            display: block;
+            color: var(--text-color);
+            padding: 12px 20px;
             text-decoration: none;
-            border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
         }
-        #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #1abc9c;
-            color: #2c3e50;
+
+        #dropdown-menu ul li a:hover, #dropdown-menu ul li a.active {
+            background-color: var(--accent-color);
+            color: white;
         }
+
+        /* 主要內容區域 */
         #content {
-            margin-left: 270px;
             padding: 20px 40px;
-            width: calc(100% - 270px);
+            max-width: 900px;
+            margin: 0 auto;
         }
+
         .chapter {
             margin-bottom: 40px;
-            padding-top: 20px;
-            border-top: 3px solid #3498db;
-            background-color: #ffffff;
             padding: 25px;
-            border-radius: 8px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent-color);
         }
+
         h3 {
-            color: #2980b9;
-            border-bottom: 2px solid #3498db;
+            color: var(--header-bg);
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 8px;
+            font-size: 1.8em;
         }
+
         .formula {
             margin: 20px 0;
             padding: 15px;
-            background-color: #fdfdfd;
-            border-left: 5px solid #1abc9c;
+            background-color: var(--formula-bg);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
             font-size: 1.1em;
             overflow-x: auto;
         }
+
         .formula-title {
             font-weight: bold;
-            color: #34495e;
+            color: var(--header-bg);
             margin-bottom: 10px;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
 
-<div id="sidebar">
-    <h2>公式導覽</h2>
-    <ul>
-        <li><a href="#ch1" class="nav-link">第一章、單自由度系統</a></li>
-        <li><a href="#ch2" class="nav-link">第二章、廣義與自由度系統</a></li>
-        <li><a href="#ch3" class="nav-link">第三章、反應譜與設計譜</a></li>
-        <li><a href="#ch4" class="nav-link">第四章、多自由度離散系統</a></li>
-        <li><a href="#ch5" class="nav-link">第五章、連續質量系統</a></li>
-        <li><a href="#appendix-a" class="nav-link">附錄 A - 補充公式</a></li>
-    </ul>
-</div>
+<header id="header">
+    <h1>
+        <svg class="capybara-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#A67B5B" d="M163.4,74.6c0.2,14.1-3.1,27.8-9.5,40.1c-6.1,11.7-14.8,21.8-25.5,29.6c-10.4,7.6-22.5,12.8-35.4,15.2c-11.4,2.1-23.1,1.5-34.3-1.6c-11.9-3.2-22.8-9.1-31.9-17.1c-8.9-7.9-15.9-17.8-20.4-28.9c-4.5-11.1-6.5-23.2-5.8-35.3c0.7-12.7,4.3-25,10.6-36.1c6.5-11.4,15.6-21.2,26.6-28.7c11.1-7.5,23.8-12.5,37.1-14.5c13.1-2,26.6-0.8,39.1,3.6C151.7,45.1,160.4,59,163.4,74.6z" transform="translate(0, 20)"></path><path fill="#4E342E" d="M100,130 Q80,145 60,130 M140,130 Q120,145 100,130" stroke="#4E342E" stroke-width="5" stroke-linecap="round" fill="none" transform="translate(0, 20)"></path><ellipse cx="75" cy="95" rx="7" ry="9" fill="#4E342E" transform="translate(0, 20)"></ellipse><ellipse cx="125" cy="95" rx="7" ry="9" fill="#4E342E" transform="translate(0, 20)"></ellipse></svg>
+        <span>水豚君的結構動力學筆記</span>
+    </h1>
+    <div id="menu-container" style="position: relative;">
+        <button id="menu-toggle">公式選單</button>
+        <nav id="dropdown-menu">
+            <ul>
+                <li><a href="#ch1" class="nav-link">第一章、單自由度系統</a></li>
+                <li><a href="#ch2" class="nav-link">第二章、廣義與自由度系統</a></li>
+                <li><a href="#ch3" class="nav-link">第三章、反應譜與設計譜</a></li>
+                <li><a href="#ch4" class="nav-link">第四章、多自由度離散系統</a></li>
+                <li><a href="#ch5" class="nav-link">第五章、連續質量系統</a></li>
+                <li><a href="#appendix-a" class="nav-link">附錄 A - 補充公式</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <div id="content">
+    <!-- 內容與原先相同，此處省略以保持簡潔 -->
     <div id="ch1" class="chapter">
         <h3>第一章、單自由度系統 (Single-Degree-of-Freedom Systems)</h3>
         
@@ -205,9 +289,49 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menu-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
         const navLinks = document.querySelectorAll('.nav-link');
         const chapters = document.querySelectorAll('.chapter');
 
+        // 切換下拉選單顯示/隱藏
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // 防止事件冒泡到 window
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // 點擊頁面其他地方時，關閉下拉選單
+        window.addEventListener('click', function() {
+            if (dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // 點擊選單連結時的處理
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdownMenu.classList.remove('show'); // 點擊後關閉選單
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                // 計算滾動位置 (考慮到固定 header 的高度)
+                const headerOffset = 80; // 70px header + 10px 緩衝
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // 手動設定 active class 以獲得即時反饋
+                setActiveLink(targetId.substring(1));
+            });
+        });
+
+        // 設定目前作用中的連結
         function setActiveLink(id) {
             navLinks.forEach(link => {
                 link.classList.remove('active');
@@ -217,33 +341,20 @@
             });
         }
 
-        // Set active link on scroll
+        // 根據滾動位置設定作用中連結
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setActiveLink(entry.target.id);
                 }
             });
-        }, { rootMargin: '-50% 0px -50% 0px' });
+        }, { rootMargin: '-40% 0px -60% 0px' }); // 調整觀察邊界，使其在畫面中間觸發
 
         chapters.forEach(chapter => {
             observer.observe(chapter);
         });
 
-        // Set active link on click
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                 // Manually set active class on click for instant feedback
-                setActiveLink(targetId.substring(1));
-            });
-        });
-        
-        // Set initial active link
+        // 初始載入時設定作用中連結
         if(window.location.hash) {
              setActiveLink(window.location.hash.substring(1));
         } else {
